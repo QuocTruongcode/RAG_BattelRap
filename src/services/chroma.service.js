@@ -28,6 +28,7 @@ export const saveToChroma = async (arrayData) => {
         console.log("save thanh cong");
     } catch (e) {
         console.log("save khong thanh cong", e.message);
+        throw e;
     }
 };
 // Thêm vào file chroma.service.js hiện có của bạn

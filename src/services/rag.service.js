@@ -14,12 +14,14 @@ export const indexDocuments = async () => {
         const arrayData =
             await embeddingChunk();
 
+        console.log("Check array data: ", arrayData);
         await saveToChroma(arrayData);
 
         console.log("Index thành công");
 
     } catch (e) {
         console.log("save khong thanh cong", e.message);
+        throw e;
     }
 
 };

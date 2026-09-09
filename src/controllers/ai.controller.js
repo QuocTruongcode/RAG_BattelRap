@@ -3,7 +3,7 @@ import { retrieveContext } from '../services/rag.service.js'
 
 const testAI = async (req, res) => {
     try {
-        const question = req.body.message;
+        const { question } = req.body;
 
         if (!question) {
             return res.status(500).json({

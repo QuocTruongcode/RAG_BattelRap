@@ -15,10 +15,10 @@ const generateAnswer = async (chunks, question) => {
         .join("\n\n");
 
     const systemPrompt = `
-Bạn là chuyên gia về rap Việt Nam.
-Chỉ trả lời dựa trên thông tin được cung cấp.
-Nếu không có thông tin, hãy nói thẳng là không biết.
-Trả lời bằng tiếng Việt, ngắn gọn và chính xác.
+        Bạn là chuyên gia về rap Việt Nam.
+        Chỉ trả lời dựa trên thông tin được cung cấp.
+        Nếu không có thông tin, hãy nói thẳng là không biết.
+        Trả lời bằng tiếng Việt, ngắn gọn và chính xác.
     `.trim();
 
     const userMessage = `
