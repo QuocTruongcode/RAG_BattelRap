@@ -6,7 +6,7 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 const model = new ChatGoogleGenerativeAI({
     model: "gemini-flash-latest",
-    apiKey: process.env.GOOGLE_API_KEY,
+    apiKey: process.env.GOOGLE_API_KEY_B,
 });
 
 const generateAnswer = async (chunks, question) => {
