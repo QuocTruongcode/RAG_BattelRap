@@ -1,13 +1,22 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ quiet: true });
 
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { matchAnalysisSchema, barExplanationSchema } from "../schemas/matchAnalysis.schema.js";
 
 const model = new ChatGoogleGenerativeAI({
-    model: "gemini-flash-latest",
-    apiKey: process.env.GOOGLE_API_KEY_B,
+    // model: "gemini-flash-latest",
+    model: "gemini-3-flash-preview",
+    // model: "gemini-2.5-flash",
+    // model: "gemini-3.6-flash",
+    apiKey: process.env.GOOGLE_API_KEY,
+    maxRetries: 3,
 });
+
+// const modelWithSearch = model.bindTools([
+//     { googleSearch: {} }
+// ]);
 
 const generateAnswer = async (chunks, question) => {
     const context = chunks
@@ -40,5 +49,19 @@ Lưu ý: Chỉ dùng thông tin trong CONTEXT, không bịa đặt.
 
     return response.content;
 };
+// Thêm hàm analyzeMatch để phân tích trận đấu và đánh giá từng battler
 
-export { model, generateAnswer };
+const analyzeMatch = async (question) => {
+    const structuredModel = model.withStructuredOutput(matchAnalysisSchema, {
+        name: "match_analysis",
+        method: "jsonSchema",
+    });
+
+    return await structuredModel.invoke(
+        `Phân tích trận đấu rap theo đúng cấu trúc yêu cầu. Câu hỏi: ${question}`
+    );
+};
+
+
+
+export { model, generateAnswer, analyzeMatch };
