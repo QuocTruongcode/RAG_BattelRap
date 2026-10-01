@@ -16,9 +16,15 @@ export const matchAnalysisSchema = z.object({
 
 export const barExplanationSchema = z.object({
     explanation: z.string().describe(
-        "Nội dung giải thích ý nghĩa câu rap, viết dưới dạng markdown (có thể dùng heading, in đậm, danh sách nếu cần), giải thích rõ chơi chữ, ẩn ý, ngữ cảnh liên quan"
+        "Nội dung giải thích ý nghĩa câu rap, viết dưới dạng markdown..."
+    ),
+    needSearch: z.boolean().describe(
+        "true nếu cần tìm kiếm internet để xác thực/bổ sung thông tin, false nếu đã đủ kiến thức."
+    ),
+    searchQuery: z.string().describe(
+        "Câu truy vấn ngắn gọn dùng để tìm kiếm thông tin trên internet. Luôn trả về một câu truy vấn nhắm đến vấn đề quan trọng nhất là câu rap đang nhắc đến sự kiện gì(Ưu tiên số 1 vẫn là sự kiện, đối tượng gì đang được nhắc trong câu rap)"
     ),
     keywords: z.array(z.string()).min(1).max(3).describe(
-        "2-3 từ khoá cụ thể (tên sự kiện, tên người, địa danh, thuật ngữ văn hoá được nhắc tới trong câu rap) dùng để tìm kiếm ảnh/bài viết minh hoạ liên quan. Không dùng từ khoá chung chung."
+        "2-3 từ khoá cụ thể dùng để tìm kiếm ảnh/bài viết minh hoạ liên quan qua Serper(lưu ý tôi cần cụm từ khoá đầy đủ đối tượng + thời gian hoặc địa điểm)."
     ),
 });

@@ -24,6 +24,7 @@ export const embeddingText = async (text) => {
     } catch (error) {
 
         console.log(error);
+        throw error;
 
     }
 };

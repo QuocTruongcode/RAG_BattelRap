@@ -4,7 +4,7 @@ dotenv.config({ quiet: true });
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { matchAnalysisSchema, barExplanationSchema } from "../schemas/matchAnalysis.schema.js";
-
+import { tavilySearchTool } from "../ExtentionTool/tavilySearchTool.js"
 const model = new ChatGoogleGenerativeAI({
     // model: "gemini-flash-latest",
     model: "gemini-3-flash-preview",
@@ -18,11 +18,13 @@ const model = new ChatGoogleGenerativeAI({
 //     { googleSearch: {} }
 // ]);
 
+const modelWithSearch = model.bindTools([tavilySearchTool]);
+
 const generateAnswer = async (chunks, question) => {
     const context = chunks
         .map((chunk, i) => `[Nguồn ${i + 1}]:\n${chunk.content}`)
         .join("\n\n");
-
+    // console.log("Check context: ", context)
     const systemPrompt = `
         Bạn là chuyên gia về rap Việt Nam.
         Chỉ trả lời dựa trên thông tin được cung cấp.
@@ -64,4 +66,4 @@ const analyzeMatch = async (question) => {
 
 
 
-export { model, generateAnswer, analyzeMatch };
+export { model, generateAnswer, analyzeMatch, modelWithSearch };
