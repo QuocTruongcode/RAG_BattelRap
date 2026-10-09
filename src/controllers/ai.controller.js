@@ -6,13 +6,14 @@ import { barExplanationSchema } from "../schemas/matchAnalysis.schema.js";
 import { tavilySearchTool } from "../ExtentionTool/tavilySearchTool.js";
 import { SYSTEM_PROMPT } from "../constants/prompts.js"; // nhớ đuôi .js vì project dùng ESM
 import { searchImages } from "../ExtentionTool/searchImage.js"
+import { SYSTEM_PROMPT_DRAMA } from "../constants/prompts.js"; // nhớ đuôi .js vì project dùng ESM
 // Model đã ép cấu trúc output theo schema, tạo 1 lần dùng lại nhiều lần
 const structuredModel = model.withStructuredOutput(barExplanationSchema);
 
 const testAI = async (req, res) => {
     try {
         const { question } = req.body;
-
+        console.log("Check question: ", question)
         if (!question) {
             return res.status(500).json({
                 errCode: 1,
@@ -20,7 +21,11 @@ const testAI = async (req, res) => {
             });
         }
 
-        const response = await model.invoke(question);
+        const messages = [
+            new SystemMessage(SYSTEM_PROMPT_DRAMA),
+            new HumanMessage(question),
+        ];
+        const response = await model.invoke(messages);
 
         return res.status(200).json({
             errCode: 0,

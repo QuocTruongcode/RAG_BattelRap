@@ -3,14 +3,14 @@ dotenv.config({ quiet: true });
 
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import { matchAnalysisSchema, barExplanationSchema } from "../schemas/matchAnalysis.schema.js";
+import { matchAnalysisSchema, barExplanationSchema, matchAnalysisBeefSchema } from "../schemas/matchAnalysis.schema.js";
 import { tavilySearchTool } from "../ExtentionTool/tavilySearchTool.js"
 const model = new ChatGoogleGenerativeAI({
     // model: "gemini-flash-latest",
     model: "gemini-3-flash-preview",
     // model: "gemini-2.5-flash",
     // model: "gemini-3.6-flash",
-    apiKey: process.env.GOOGLE_API_KEY,
+    apiKey: process.env.GOOGLE_API_KEY_C,
     maxRetries: 3,
 });
 

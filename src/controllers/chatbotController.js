@@ -14,7 +14,7 @@ const chatbotController = async (req, res) => {
         }
 
         const chunks = await retrieveTopBars(question, 3);
-        // console.log(" Check Chunk: ", chunks)
+        console.log(" Check Chunk: ", chunks)
         const answer = await generateAnswer(chunks, question);
 
         return res.status(200).json({
